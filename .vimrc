@@ -4,7 +4,7 @@ syntax on                     " Enable syntax highlighting
 set ignorecase                " Use case insensitive search, except when using capital letters
 set smartcase
 
-set cmdheight = 2             " Set the command window height to 2 lines
+set cmdheight=2               " Set the command window height to 2 lines
 set number                    " Display line numbers on the left
 
 set guioptions-=L             " turns the scrollbar off in gvim
