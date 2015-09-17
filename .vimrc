@@ -6,6 +6,8 @@ set smartcase
 
 set cmdheight=2               " Set the command window height to 2 lines
 set number                    " Display line numbers on the left
+set listchars=tab:>-,trail:-
+set list
 
 set guioptions-=L             " turns the scrollbar off in gvim
 let g:netrw_mousemaps = 0     " disables the mouse from selecting files
