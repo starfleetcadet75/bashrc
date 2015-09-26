@@ -1,5 +1,5 @@
 #!/bin/sh
-# Installs the misc. files into the corect locations
+# Installs the misc. files into the correct locations
 
 echo "Beginning install ..."
 
