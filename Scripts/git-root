@@ -1,0 +1,16 @@
+#!/bin/sh -e
+# gives absolute path to git repository root, either for cwd, or directory (or files' dirname) given as $1
+# when not a git repository, exit >0
+
+if [ -n "$1" ]
+then
+    if [ -d "$1" ]
+    then
+        cd $1
+    else
+        cd `dirname $1`
+    fi
+fi
+
+exec git rev-parse --show-toplevel
+

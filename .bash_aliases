@@ -9,8 +9,20 @@ alias path='echo -e $[PATH//:/\\n}'
 # Upgrade/update system
 alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get autoremove'
 
+# Shutdown commands
+alias shutdown='sudo shutdown -h now'
+
 # Shorten apt-get command
 alias apt-get='sudo apt-get'
+
+# Aliases for ls command
+alias ls='ls --color=auto'
+alias sl='ls'
+alias ll='ls -l'
+alias la='ls -a'
+alias lh='ls -h'
+alias l1='ls -1'
+alias l='ls -F'
 
 # Perform 'ls' after 'cd' if successful
 function cdls() {
@@ -32,12 +44,6 @@ alias .....='cd ../../../../'
 alias .4='cd ../../../../'
 alias .5='cd ../../../../..'
 
-# Aliases for ls command
-alias ls='ls --color=auto'
-alias ll='ls -l'
-alias la='ls -a'
-alias l='ls -F'
-
 # Become system admin
 alias god='sudo -i'
 alias root='sudo -i'
@@ -48,6 +54,8 @@ alias nano='nano -w'
 # Vim editor
 alias vi='vim'
 alias svi='sudo vi'
+alias gv='gvim'
+alias givm='gvim'
 alias edit='vim'
 
 # Alias for exit
@@ -119,4 +127,9 @@ function ii()
     echo
 }
 
+# Tree command
+if [ ! -x "$(which tree 2>/dev/null)" ]
+then
+    alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
+fi
 
