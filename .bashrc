@@ -12,6 +12,7 @@ esac
 [ -z "$TMUX" ] && exec tmux -2
 
 # file containing all the var exports
+export SCRIPTS_DIR=~/Scripts
 source $SCRIPTS_DIR/environment.sh
 
 # don't put duplicate lines or lines starting with space in the history.
