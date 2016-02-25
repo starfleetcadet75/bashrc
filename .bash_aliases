@@ -15,6 +15,9 @@ alias shutdown='sudo shutdown -h now'
 # Shorten apt-get command
 alias apt-get='sudo apt-get'
 
+# Take a Screenshot
+alias screenshot='xwd | convert - ~/Downloads/capture.png'
+
 # Aliases for ls command
 alias ls='ls --color=auto'
 alias sl='ls'
