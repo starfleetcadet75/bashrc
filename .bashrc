@@ -9,7 +9,9 @@ case $- in
 esac
 
 # starts tmux with the terminal
-[ -z "$TMUX" ] && exec tmux -2
+if [ -e /usr/bin/tmux ]; then
+	[ -z "$TMUX" ] && exec tmux -2
+fi
 
 # file containing all the var exports
 export SCRIPTS_DIR=~/Scripts
