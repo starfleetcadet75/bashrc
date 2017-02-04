@@ -1,5 +1,0 @@
-#!/bin/sh
-
-BRANCH_NAME=$1
-git checkout --track -b ${BRANCH_NAME} origin/${BRANCH_NAME}
-echo Created branch: $BRANCH_NAME

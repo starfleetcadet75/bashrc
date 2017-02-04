@@ -1,0 +1,17 @@
+e asm.cmtright = true  # Show comments at right of disassembly
+e asm.pseudo = true  # Shows pseudocode in disassembly. Eg mov eax, str.ok = > eax = str.ok
+e asm.emu = false
+e asm.esil = false
+e asm.describe = false
+e asm.syntax = intel
+e asm.section = true
+e asm.stackptr = true
+
+e cmd.stack = true  # Display stack and register values on top of disasembly view (visual mode)
+
+eco solarized  # Solarized theme
+
+e scr.utf8 = true
+e scr.color = true
+
+e cfg.sandbox = false  # Sanbox settings
