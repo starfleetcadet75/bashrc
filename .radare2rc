@@ -7,11 +7,15 @@ e asm.syntax = intel
 e asm.section = true
 e asm.stackptr = true
 
-e cmd.stack = true  # Display stack and register values on top of disasembly view (visual mode)
+e cmd.stack = true  # Display stack and register values on top of disassembly view (visual mode)
+
+e stack.anotated = true
+
+e dbg.bep = main
 
 eco solarized  # Solarized theme
 
 e scr.utf8 = true
 e scr.color = true
 
-e cfg.sandbox = false  # Sanbox settings
+e cfg.sandbox = false  # Sandbox settings

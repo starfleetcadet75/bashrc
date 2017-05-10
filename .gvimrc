@@ -10,3 +10,4 @@ set nowrap
 set tabstop=4
 set shiftwidth=4
 set expandtab
+set guioptions-=L  " turns the scrollbar off in gvim
