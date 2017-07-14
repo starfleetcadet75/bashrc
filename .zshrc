@@ -38,7 +38,7 @@ setopt NO_BEEP
 #}}}
 
 #{{{ Environments variables
-export PATH=$HOME/.local/bin:$HOME/Tools:/usr/local/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/Tools:$HOME/Scripts:/usr/local/bin:$HOME/.cargo/bin:$PATH
 export VISUAL='nvim'
 export EDITOR='nvim'
 export JAVA_HOME='/usr/bin'
