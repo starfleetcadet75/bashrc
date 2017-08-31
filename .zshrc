@@ -2,7 +2,6 @@
 export ZSH="/home/starfleetcadet75/.oh-my-zsh"
 DEFAULT_USER="starfleetcadet75"
 ZSH_THEME="agnoster"
-_Z_DATA="$ZSH/.z"
 #}}}
 
 # Starts tmux with the terminal
@@ -42,10 +41,8 @@ export PATH=$HOME/.local/bin:$HOME/Tools:$HOME/Scripts:/usr/local/bin:$HOME/.car
 export VISUAL='nvim'
 export EDITOR='nvim'
 export JAVA_HOME='/usr/bin'
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 #}}}
-
-# Source Z
-[[ -r "/usr/share/z/z.sh" ]] && source /usr/share/z/z.sh
 
 #{{{ Aliases
 unalias md
@@ -55,8 +52,6 @@ unalias rd
 alias vi='nvim'
 alias vim='nvim'
 alias svi='sudo vi'
-alias givm='gvim'
-
 alias xx='exit'
 alias cls='clear'
 alias lh='ls -h'
@@ -100,12 +95,17 @@ alias nowdate='date +"%d-%m-%Y"'
 # Resume wget downloads by default
 alias wget='wget -c'  # Resume wget downloads by default
 
+# Fix TERM in remote shells
+alias ssh='TERM=xterm-256color ssh'
+
 # Print paths
 alias path='echo -e ${PATH//:/\\n}'
 alias libpath='echo -e ${LD_LIBRARY_PATH//:/\\n}'
 
 # Fix ropgadget's name
 alias ropgadget='ROPgadget'
+
+alias myps='ps -eaf | grep $USER'
 
 # Find the package that installed a command
 whatinstalled() { which "$@" | xargs -r readlink -f | xargs -r pacman -Ss ;}

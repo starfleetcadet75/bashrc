@@ -2,7 +2,7 @@
 	name = starfleetcadet75
 	email = starfleetcadet75@gmail.com
 [core]
-	editor = gvim
+	editor = nvim
 [color]
 	ui = auto
 [color "branch"]
@@ -20,12 +20,13 @@
 	changed = yellow bold
 	untracked = red bold
 [diff]
-	tool = kdiff3
-[difftool]
-	prompt = false
+  tool = default-difftool
+[difftool "default-difftool"]
+  cmd = code --wait --diff $LOCAL $REMOTE
 [alias]
-	praise = blame
-        st = status
+  praise = blame
+  st = status
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
 [push]
-	default = simple
+  default = simple
