@@ -4,19 +4,11 @@ CRYPTO_SUDO_COLOR="yellow"
 CRYPTO_JOB_COLOR="cyan"
 CRYPTO_USER_COLOR="red"
 CRYPTO_DIR_COLOR="green"
-CRYPTO_RUST_COLOR="red"
-CRYPTO_DOCKER_COLOR="blue"
-CRYPTO_PYENV_COLOR="yellow"
-CRYPTO_AWS_COLOR="208"
 
-CRYPTO_PROMPT_SYMBOL="λ"
+CRYPTO_PROMPT_SYMBOLS=(π λ Δ Π Σ Φ Ψ Ω ω μ ∀ ∂ ∮)
 CRYPTO_BADSTATUS_SYMBOL="✘"
 CRYPTO_SUDO_SYMBOL="⚡"
 CRYPTO_JOB_SYMBOL="⚙"
-CRYPTO_RUST_SYMBOL="𝗥"
-CRYPTO_DOCKER_SYMBOL="🐳"
-CRYPTO_PYENV_SYMBOL="🐍"
-CRYPTO_AWS_SYMBOL="☁"
 
 # GIT
 CRYPTO_GIT_SHOW="true"
@@ -37,22 +29,34 @@ CRYPTO_GIT_STATUS_AHEAD="⇡"
 CRYPTO_GIT_STATUS_BEHIND="⇣"
 CRYPTO_GIT_STATUS_DIVERGED="⇕"
 
+# RUST
+CRYPTO_RUST_SHOW="true"
+CRYPTO_RUST_COLOR="red"
+CRYPTO_RUST_SYMBOL="𝗥"
+
 # NODE
 CRYPTO_NODE_SHOW="true"
 CRYPTO_NODE_COLOR="magenta"
 CRYPTO_NODE_SYMBOL="⬢"
 CRYPTO_NODE_DEFAULT_VERSION=""
 
+# VIRTUAL ENV
+CRYPTO_VENV_SHOW="true"
+CRYPTO_VENV_COLOR="blue"
+CRYPTO_VENV_SYMBOL=""
+
+
 # Check if command exists in $PATH
 _exists() {
     command -v $1 > /dev/null 2>&1
 }
 
-# Check if the current directory is in a Git repository.
+# Check if the current directory is a Git repository.
 _is_git() {
   command git rev-parse --is-inside-work-tree &>/dev/null
 }
 
+# Builds a 'segment' of the prompt, given a color and content/symbol.
 _prompt_segment() {
     local color content
     [[ -n $1 ]] && color="%F{$1}" || color="%f"
@@ -62,6 +66,10 @@ _prompt_segment() {
     echo -n "%{%b%f%}"  # unset color
 }
 
+# Builds the status segment. Displays the prompt symbol by default unless:
+#   1) the last process returned a non-zero status
+#   2) the UID is root
+#   3) there are background jobs
 prompt_status() {
     if [[ $RETVAL -ne 0 ]]; then
         _prompt_segment $CRYPTO_BADSTATUS_COLOR "$CRYPTO_BADSTATUS_SYMBOL "
@@ -70,16 +78,30 @@ prompt_status() {
     elif [[ $(jobs -l | wc -l) -gt 0 ]]; then
         _prompt_segment $CRYPTO_JOB_COLOR "$CRYPTO_JOB_SYMBOL "
     else
-        _prompt_segment $CRYPTO_PROMPT_COLOR "$CRYPTO_PROMPT_SYMBOL "
+        # Randomly select a prompt symbol every time a new line is started
+        local rand
+        if _exists shuf; then
+            rand=`shuf -i 0-12 -n 1`
+        # If on a Mac, jot should work
+        elif _exists jot; then
+            rand=`jot -r 1 1 13`
+        else
+            rand=0
+        fi
+
+        _prompt_segment $CRYPTO_PROMPT_COLOR "${CRYPTO_PROMPT_SYMBOLS[$rand]} "
     fi
 }
 
+# Builds the user segment. Only displayed if the user has su'ed to
+# another user or is using ssh.
 prompt_user() {
     if [[ "$USER" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
         _prompt_segment $CRYPTO_USER_COLOR "$USER@%m "
     fi
 }
 
+# Builds the directory display segment.
 prompt_dir() {
     _prompt_segment $CRYPTO_DIR_COLOR "%~ "
 }
@@ -111,6 +133,7 @@ crypto_git_status() {
     fi
 }
 
+# Shows git information if in a git repository.
 prompt_git() {
     [[ $CRYPTO_GIT_SHOW == false ]] && return
 
@@ -122,11 +145,26 @@ prompt_git() {
         "${git_branch}${git_status} "
 }
 
+# Displays the current Rust version if working on a Rust project.
+prompt_rust() {
+    [[ $CRYPTO_RUST_SHOW == false ]] && return
+
+    [[ -f Cargo.toml || -n ./*.rs ]] || return
+    _exists rustc || return
+    local rust_version=$(rustc --version | grep --colour=never -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]')
+
+    _prompt_segment \
+        "$CRYPTO_RUST_COLOR" \
+        "${CRYPTO_RUST_SYMBOL} v${rust_version}"
+}
+
+# Displays the current Node version if working on a Node project.
 prompt_node() {
     [[ $CRYPTO_NODE_SHOW == false ]] && return
 
     # Show NODE status only for JS-specific folders
-    [[ -f package.json || -d node_modules || -n *.js(#qN^/) ]] || return
+    [[ -f package.json || -d node_modules ]] || return
+    ls *.js &>/dev/null || return
 
     local node_version
     if _exists nvm; then
@@ -144,16 +182,18 @@ prompt_node() {
 
     _prompt_segment \
         $CRYPTO_NODE_COLOR \
-        "via ${SPACESHIP_NODE_SYMBOL} ${node_version} "
+        "via ${CRYPTO_NODE_SYMBOL} ${node_version} "
 }
 
+# Displays if a virtual env is running.
 prompt_virtualenv() {
-    local virtualenv_path="$VIRTUAL_ENV"
-    if [[ -n $virtualenv_path && -n $VIRTUAL_ENV_DISABLE_PROMPT ]]; then
-        _prompt_segment \
-            $CRYPTO_PYENV_COLOR \
-            "($CRYPTO_PYENV_SYMBOL `basename $virtualenv_path`)"
-    fi
+    [[ $CRYPTO_VENV_SHOW == false ]] && return
+
+    [ -n "$VIRTUAL_ENV" ] && _exists deactivate || return
+
+    _prompt_segment \
+        $CRYPTO_VENV_COLOR \
+        "$CRYPTO_VENV_SYMBOL $VIRTUAL_ENV"
 }
 
 build_prompt() {
@@ -164,6 +204,7 @@ build_prompt() {
     echo -n "%{$fg[yellow]%}➜ "
     prompt_git
     prompt_node
+    prompt_rust
     prompt_virtualenv
 }
 
