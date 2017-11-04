@@ -1,7 +1,7 @@
 #{{{ Zsh Environments variables
 export ZSH="/home/starfleetcadet75/.oh-my-zsh"
 DEFAULT_USER="starfleetcadet75"
-ZSH_THEME="agnoster"
+ZSH_THEME="crypto"  #"agnoster"
 #}}}
 
 # Starts tmux with the terminal
@@ -107,6 +107,8 @@ alias ropgadget='ROPgadget'
 
 alias myps='ps -eaf | grep $USER'
 
+
+
 # Find the package that installed a command
 whatinstalled() { which "$@" | xargs -r readlink -f | xargs -r pacman -Ss ;}
 
@@ -177,3 +179,9 @@ function most_useless_use_of_zsh {
 }
 #}}}
 
+#{{{ NVM
+[ -z "$NVM_DIR" ] && export NVM_DIR="$HOME/.config/nvm"
+source /usr/share/nvm/nvm.sh
+source /usr/share/nvm/bash_completion
+source /usr/share/nvm/install-nvm-exec
+#}}}

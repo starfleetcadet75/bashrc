@@ -1,4 +1,5 @@
 " General "{{{
+set mouse=a
 set history=256  " Number of things to remember in history
 set autoread
 set clipboard+=unnamedplus  " Yanks go on clipboard instead
@@ -85,10 +86,38 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'bling/vim-airline'
 Plugin 'mhinz/vim-signify'
+Plugin 'rust-lang/rust.vim'
+Plugin 'majutsushi/tagbar'
+
 
 call vundle#end()
 
 let g:airline_theme='onedark'
+" " }}}
+
+" Ctags " {{{
+let g:tagbar_type_markdown = {
+    \ 'ctagstype' : 'markdown',
+    \ 'kinds' : [
+        \ 'h:Heading_L1',
+        \ 'i:Heading_L2',
+        \ 'k:Heading_L3'
+    \ ]
+\ }
+
+let g:tagbar_type_rust = {
+    \ 'ctagstype' : 'rust',
+    \ 'kinds' : [
+        \'T:types,type definitions',
+        \'f:functions,function definitions',
+        \'g:enum,enumeration names',
+        \'s:structure names',
+        \'m:modules,module names',
+        \'c:consts,static constants',
+        \'t:traits',
+        \'i:impls,trait implementations',
+    \]
+\}
 " " }}}
 
 filetype plugin indent on  " Automatically detect file types.

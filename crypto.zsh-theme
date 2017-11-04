@@ -89,7 +89,9 @@ prompt_status() {
             rand=0
         fi
 
-        _prompt_segment $CRYPTO_PROMPT_COLOR "${CRYPTO_PROMPT_SYMBOLS[$rand]} "
+        _prompt_segment \
+            $CRYPTO_PROMPT_COLOR \
+            "${CRYPTO_PROMPT_SYMBOLS[$rand]} "
     fi
 }
 
@@ -149,13 +151,21 @@ prompt_git() {
 prompt_rust() {
     [[ $CRYPTO_RUST_SHOW == false ]] && return
 
-    [[ -f Cargo.toml || -n ./*.rs ]] || return
+    #[[ -f Cargo.toml || -n ./*.rs ]] || return
+    [[ -f Cargo.toml ]] || return
     _exists rustc || return
     local rust_version=$(rustc --version | grep --colour=never -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]')
 
+    #local rust_compiler
+    #if [[ $(rustup show | grep --quiet active -A4 | grep --quiet stable 3>/dev/null) ]]; then
+    #    rust_compiler='stable'
+    #else
+    #    rust_compiler='nightly'
+    #fi
+
     _prompt_segment \
         "$CRYPTO_RUST_COLOR" \
-        "${CRYPTO_RUST_SYMBOL} v${rust_version}"
+        "${CRYPTO_RUST_SYMBOL} v${rust_version} ${rust_compiler}"
 }
 
 # Displays the current Node version if working on a Node project.
@@ -164,7 +174,7 @@ prompt_node() {
 
     # Show NODE status only for JS-specific folders
     [[ -f package.json || -d node_modules ]] || return
-    ls *.js &>/dev/null || return
+    #ls *.js &>/dev/null || return
 
     local node_version
     if _exists nvm; then
@@ -193,7 +203,7 @@ prompt_virtualenv() {
 
     _prompt_segment \
         $CRYPTO_VENV_COLOR \
-        "$CRYPTO_VENV_SYMBOL $VIRTUAL_ENV"
+        "$VIRTUAL_ENV $CRYPTO_VENV_SYMBOL"
 }
 
 build_prompt() {
