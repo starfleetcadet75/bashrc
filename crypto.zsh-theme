@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 CRYPTO_PROMPT_COLOR="yellow"
 CRYPTO_BADSTATUS_COLOR="red"
 CRYPTO_SUDO_COLOR="yellow"
@@ -31,6 +33,8 @@ CRYPTO_GIT_STATUS_DIVERGED="⇕"
 
 # RUST
 CRYPTO_RUST_SHOW="true"
+CRYPTO_RUST_SHOW_VERSION="true"
+CRYPTO_RUST_SHOW_TOOLCHAIN="true"
 CRYPTO_RUST_COLOR="red"
 CRYPTO_RUST_SYMBOL="𝗥"
 
@@ -151,21 +155,17 @@ prompt_git() {
 prompt_rust() {
     [[ $CRYPTO_RUST_SHOW == false ]] && return
 
-    #[[ -f Cargo.toml || -n ./*.rs ]] || return
     [[ -f Cargo.toml ]] || return
+    #[[ -f Cargo.toml || -n *.rs(#qN) ]] || return
     _exists rustc || return
-    local rust_version=$(rustc --version | grep --colour=never -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]')
 
-    #local rust_compiler
-    #if [[ $(rustup show | grep --quiet active -A4 | grep --quiet stable 3>/dev/null) ]]; then
-    #    rust_compiler='stable'
-    #else
-    #    rust_compiler='nightly'
-    #fi
+    local -a rust_version
+    [[ $CRYPTO_RUST_SHOW_VERSION == false ]] || rust_version+="v$(rustc --version | grep --colour=never -oE '[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]')"
+    [[ $CRYPTO_RUST_SHOW_TOOLCHAIN == false ]] || rust_version+=$(rustc --version | grep --colour=never -oE '(stable|beta|nightly)' || echo stable)
 
     _prompt_segment \
         "$CRYPTO_RUST_COLOR" \
-        "${CRYPTO_RUST_SYMBOL} v${rust_version} ${rust_compiler}"
+        "${CRYPTO_RUST_SYMBOL} ${rust_version}"
 }
 
 # Displays the current Node version if working on a Node project.

@@ -60,7 +60,7 @@ if (has("termguicolors"))
 endif
 
 syntax on
-colorscheme onedark
+" colorscheme onedark  " Use onedark as the colorscheme
 " "}}}
 
 " Keybindings " {{{
@@ -76,6 +76,7 @@ colorscheme onedark
 " "}}}
 
 filetype off  " required for Vundle
+
 " Plugins " {{{
 set rtp+=~/.config/nvim/bundle/Vundle.vim  " Set the runtime path to include Vundle and initialize
 call vundle#begin('~/.config/nvim/bundle')
@@ -88,11 +89,23 @@ Plugin 'bling/vim-airline'
 Plugin 'mhinz/vim-signify'
 Plugin 'rust-lang/rust.vim'
 Plugin 'majutsushi/tagbar'
-
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'Lokaltog/powerline-fonts'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plugin 'arcticicestudio/nord-vim'
+Plugin 'lervag/vimtex'
 
 call vundle#end()
 
+" Required for devicons
+set guifont=Droid\ Sans\ Mono\ for\ Powerline\ Nerd\ Font\ Complete\ 12
+set encoding=utf-8
+
 let g:airline_theme='onedark'
+let g:airline_powerline_fonts = 1
+let g:vim_markdown_math = 1
 " " }}}
 
 " Ctags " {{{
@@ -119,5 +132,28 @@ let g:tagbar_type_rust = {
     \]
 \}
 " " }}}
+
+" Pandoc Markdown+LaTeX " {{{
+"function s:MDSettings()
+"    inoremap <buffer> <Leader>n \note[item]{}<Esc>i
+"    noremap <buffer> <Leader>b :! pandoc -t beamer % -o %<.pdf<CR><CR>
+"    noremap <buffer> <Leader>l :! pandoc -t latex % -o %<.pdf<CR>
+"    noremap <buffer> <Leader>v :! zathura %<.pdf 2>&1 >/dev/null &<CR><CR>
+"
+"    " adjust syntax highlighting for LaTeX parts
+"    "   inline formulas:
+"    syntax region Statement oneline matchgroup=Delimiter start="\$" end="\$"
+"    "   environments:
+"    syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+"    "   commands:
+"    syntax region Statement matchgroup=Delimiter start="{" end="}" contains=Statement
+"endfunction
+"
+"autocmd BufRead,BufNewFile *.md setfiletype markdown
+"autocmd FileType markdown :call <SID>MDSettings()
+"autocmd FileType tex :call <SID>MDSettings()
+" " }}}
+
+colorscheme nord  " Use nord as the colorscheme
 
 filetype plugin indent on  " Automatically detect file types.

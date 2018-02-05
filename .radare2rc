@@ -17,5 +17,6 @@ eco solarized  # Solarized theme
 
 e scr.utf8 = true
 e scr.color = true
+e scr.wheel = true
 
 e cfg.sandbox = false  # Sandbox settings

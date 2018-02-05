@@ -1,7 +1,7 @@
 #{{{ Zsh Environments variables
 export ZSH="/home/starfleetcadet75/.oh-my-zsh"
 DEFAULT_USER="starfleetcadet75"
-ZSH_THEME="crypto"  #"agnoster"
+ZSH_THEME="crypto"
 #}}}
 
 # Starts tmux with the terminal
@@ -42,6 +42,7 @@ export VISUAL='nvim'
 export EDITOR='nvim'
 export JAVA_HOME='/usr/bin'
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+export MAILCAPS=$HOME/.config/mailcap
 #}}}
 
 #{{{ Aliases
@@ -55,6 +56,9 @@ alias svi='sudo vi'
 alias xx='exit'
 alias cls='clear'
 alias lh='ls -h'
+alias cp='cp -i'
+alias df='df -h'
+alias free='free -m'
 
 # Perform 'ls' after 'cd' if successful
 function cdls() {
@@ -82,7 +86,7 @@ alias objdump='objdump -M intel'
 # Network aliases
 alias ping='ping -c 5'
 alias fastping='ping -c 100 -s.2'
-alias ports='netstat -tulanp'
+alias ports='ss -lntu'
 
 # Make mount command output readable
 alias mount='mount | column -t'
@@ -107,16 +111,12 @@ alias ropgadget='ROPgadget'
 
 alias myps='ps -eaf | grep $USER'
 
+# Get the weather in Boston
+alias weather='curl wttr.in/Boston'
 
 
 # Find the package that installed a command
 whatinstalled() { which "$@" | xargs -r readlink -f | xargs -r pacman -Ss ;}
-
-# Creates an archive (*.tar.gz) from given directory
-function maketar() { tar cvzf "${1%%/}.tar.gz"  "${1%%/}/"; }
-
-# Create a ZIP archive of a file or folder
-function makezip() { zip -r "${1%%/}.zip" "$1" ; }
 
 # Pretty-print of 'df' output
 function getdf() {
@@ -151,15 +151,15 @@ function get_ip() {
 # Get current host related info
 function ii() {
     echo -e "\nYou are logged on ${BRed}$HOST"
-    echo -e "\n${BRed}Additionnal information:$NC " ; uname -a
+    echo -e "\n${BRed}Additional information:$NC " ; uname -a
     echo -e "\n${BRed}Users logged on:$NC " ; w -hs |
              cut -d " " -f1 | sort | uniq
     echo -e "\n${BRed}Current date :$NC " ; date
     echo -e "\n${BRed}Machine stats :$NC " ; uptime
     echo -e "\n${BRed}Memory stats :$NC " ; free
-    echo -e "\n${BRed}Diskspace :$NC " ; getdf / $HOME
+    echo -e "\n${BRed}Diskspace :$NC " ; df
     echo -e "\n${BRed}Local IP Address :$NC" ; get_ip
-    echo -e "\n${BRed}Open connections :$NC "; netstat -pan --inet;
+    echo -e "\n${BRed}Open connections :$NC "; ss;
     echo
 }
 

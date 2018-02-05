@@ -23,10 +23,15 @@
   tool = default-difftool
 [difftool "default-difftool"]
   cmd = code --wait --diff $LOCAL $REMOTE
+[merge]
+  tool = vscode
+[mergetool "vscode"]
+  cmd = code --wait $MERGED
 [alias]
   praise = blame
   st = status
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-
 [push]
   default = simple
+[commit]
+  gpgsign = true

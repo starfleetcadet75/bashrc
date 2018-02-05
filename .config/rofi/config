@@ -1,5 +1,26 @@
 rofi.color-enabled: true
-rofi.color-window: #273238, #273238, #1e2529
-rofi.color-normal: #273238, #c1c1c1, #273238, #394249, #ffffff
-rofi.color-active: #273238, #80cbc4, #273238, #394249, #80cbc4
-rofi.color-urgent: #273238, #ff1844, #273238, #394249, #ff1844
+
+!                   background  border     separator
+rofi.color-window:  #273238,    #273238,   #259E83
+
+!                   bg          fg         bgalt      hlbg       hlfg
+rofi.color-normal:  #273238,    #c1c1c1,   #273238,   #394249,   #259E83
+rofi.color-active:  #273238,    #80cbc4,   #273238,   #394249,   #ff1844
+rofi.color-urgent:  #273238,    #ff1844,   #273238,   #394249,   #ff1844
+
+rofi.font: Roboto Mono for Powerline 20
+rofi.eh: 1
+rofi.line-margin: 15
+rofi.separator-style: solid
+rofi.hide-scrollbar: false
+rofi.lines: 7
+rofi.width: 100
+rofi.padding: 450
+rofi.bw: 0
+rofi.line-padding: 10
+rofi.opacity: 50
+rofi.fake-transparency: true
+rofi.auto-select: false
+rofi.terminal: termite
+rofi.show-icons: true
+rofi.drun-icon-theme: Crypto

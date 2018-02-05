@@ -1,0 +1,48 @@
+{
+    "workbench.iconTheme": "material-icon-theme",
+    "files.autoSave": "onFocusChange",
+    "editor.formatOnSave": true,
+    "C_Cpp.intelliSenseEngine": "Default",
+    "rust.rustup": {
+        "toolchain": "stable-x86_64-unknown-linux-gnu",
+        "nightlyToolchain": "nightly-x86_64-unknown-linux-gnu"
+    },
+    "rust.mode": "rls",
+    "rust.rls": {
+        "executable": "~/.cargo/bin/rls",
+        "useRustfmt": true
+    },
+    "rust.rustfmtPath": "~/.cargo/bin/rustfmt",
+    "rust.rustLangSrcPath": "~/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src",
+    "vim.enableNeovim": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/.vscode": true,
+        "**/__pycache__": true,
+        "**/.github": true
+    },
+    "zenMode.hideStatusBar": false,
+    "terminal.external.linuxExec": "termite",
+    "python.linting.pylintPath": "~/.local/bin/pylint",
+    "python.linting.pylintArgs": [],
+    "python.formatting.autopep8Path": "~/.local/bin/autopep8",
+    "window.zoomLevel": 0,
+    "workbench.colorTheme": "One Dark Pro Vivid",
+    "typescript.check.npmIsInstalled": false,
+    "mdmath.delimiters": "dollars",
+    "gitlens.advanced.messages": {
+        "suppressCommitHasNoPreviousCommitWarning": false,
+        "suppressCommitNotFoundWarning": false,
+        "suppressFileNotUnderSourceControlWarning": false,
+        "suppressGitVersionWarning": false,
+        "suppressLineUncommittedWarning": false,
+        "suppressNoRepositoryWarning": false,
+        "suppressUpdateNotice": false,
+        "suppressWelcomeNotice": true
+    },
+    "workbench.startupEditor": "newUntitledFile"
+}
