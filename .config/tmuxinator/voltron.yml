@@ -1,0 +1,13 @@
+# ~/.tmuxinator/voltron.yml
+
+name: voltron
+root: ~/
+windows:
+  - gdb:
+      layout: aed1,177x46,0,0[177x18,0,0{88x18,0,0,13,88x18,89,0,17},177x27,0,19{122x27,0,19,15,54x27,123,19,19}]
+      panes:
+        - gdb
+        - voltron view reg
+        - voltron view stack
+        - voltron view bp
+

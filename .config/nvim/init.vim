@@ -134,24 +134,34 @@ let g:tagbar_type_rust = {
 " " }}}
 
 " Pandoc Markdown+LaTeX " {{{
-"function s:MDSettings()
-"    inoremap <buffer> <Leader>n \note[item]{}<Esc>i
-"    noremap <buffer> <Leader>b :! pandoc -t beamer % -o %<.pdf<CR><CR>
-"    noremap <buffer> <Leader>l :! pandoc -t latex % -o %<.pdf<CR>
-"    noremap <buffer> <Leader>v :! zathura %<.pdf 2>&1 >/dev/null &<CR><CR>
-"
-"    " adjust syntax highlighting for LaTeX parts
-"    "   inline formulas:
-"    syntax region Statement oneline matchgroup=Delimiter start="\$" end="\$"
-"    "   environments:
-"    syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
-"    "   commands:
-"    syntax region Statement matchgroup=Delimiter start="{" end="}" contains=Statement
-"endfunction
-"
-"autocmd BufRead,BufNewFile *.md setfiletype markdown
-"autocmd FileType markdown :call <SID>MDSettings()
-"autocmd FileType tex :call <SID>MDSettings()
+let g:vimtex_compiler_latexmk = {
+   \ 'build_dir' : '/tmp',
+   \ 'options' : [
+   \   '-pdf',
+   \   '-verbose',
+   \   '-file-line-error',
+   \   '-synctex=1',
+   \   '-interaction=nonstopmode',
+   \]
+\}
+
+function s:MDSettings()
+    "    inoremap <buffer> <Leader>n \note[item]{}<Esc>i
+    noremap <buffer> <Leader>b :! pandoc -t beamer % -o %<.pdf<CR><CR>
+    noremap <buffer> <Leader>l :! pandoc -t latex % -o %<.pdf<CR>
+    noremap <buffer> <Leader>v :! zathura %<.pdf 2>&1 >/dev/null &<CR><CR>
+
+    " adjust syntax highlighting for LaTeX parts
+    "   inline formulas:
+    syntax region Statement oneline matchgroup=Delimiter start="\$" end="\$"
+    "   environments:
+    syntax region Statement matchgroup=Delimiter start="\\begin{.*}" end="\\end{.*}" contains=Statement
+    "   commands:
+    syntax region Statement matchgroup=Delimiter start="{" end="}" contains=Statement
+endfunction
+
+autocmd BufRead,BufNewFile *.md setfiletype markdown
+autocmd FileType markdown :call <SID>MDSettings()
 " " }}}
 
 colorscheme nord  " Use nord as the colorscheme
